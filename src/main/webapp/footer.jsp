@@ -1,3 +1,4 @@
+<%@ page import="jakarta.servlet.http.*" %>
 <footer>
         <div class="footer">
             <p>

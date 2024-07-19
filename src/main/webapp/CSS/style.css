@@ -1,20 +1,18 @@
-/* General styles */
 * {
-    padding: 0;
-    margin: 0;
-    font-family: 'Josefin Sans', sans-serif;
-    box-sizing: border-box;
-    text-decoration: none;
-    scroll-behavior: smooth;
+  padding: 0;
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  outline: none;
+  text-decoration: none;
 }
 
-body {
-    margin: 0;
-    font-family: 'Josefin Sans', sans-serif;
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
-/* Header and navigation */
-/* Header and navigation */
 .header {
     height: 12vh;
     width: 100%;
@@ -185,7 +183,8 @@ nav ul li.dropdown > a {
 }
 
 section {
-    padding-top: 0vh;
+    padding: 8rem 10%;
+    min-height: 100vh;
 }
 
 /* Slide styles */
@@ -193,6 +192,7 @@ section {
     display: none;
     justify-content: center;
     align-items: center;
+    display: block;
 }
 
 .slide img {
@@ -298,9 +298,8 @@ section {
 }
 /* Theater section */
 section#theaters {
-    height: 90vh;
+    height: 100vh;
     width: 100%;
-    padding-bottom: 100vh;
     background-color: bisque;
     margin-top: -20px;
 }
@@ -318,7 +317,7 @@ section#theaters {
 }
 
 #city-select {
-    padding: 14px;
+    padding: 2rem;
     font-size: 16px;
     margin-top: 50px;
     width: 200px;
@@ -694,5 +693,13 @@ button:hover {
 
 #my-mtix-btn {
     margin-left: -3px;
+}
+
+section:nth-child(odd) {
+	background-color: rgb(255, 196, 224);
+}
+
+section:nth-child(even) {
+	background-color: bisque;
 }
 
