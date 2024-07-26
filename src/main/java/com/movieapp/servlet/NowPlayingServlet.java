@@ -1,4 +1,4 @@
-package com.movieapp.servlet;
+	package com.movieapp.servlet;
 
 import com.movieapp.dao.MovieDAO;
 import com.movieapp.model.Movie;

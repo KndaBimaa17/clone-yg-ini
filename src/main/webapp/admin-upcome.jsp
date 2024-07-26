@@ -32,32 +32,34 @@
 	            if (action.equals("add")) {
 	                String title = request.getParameter("title");
 	                String trailer = request.getParameter("trailer");
-	                String duration = request.getParameter("duration");
-	                String rating = request.getParameter("rating");
-	                String ageRating = request.getParameter("ageRating");
+	                String releaseDate = request.getParameter("releaseDate");
+	                String movieType = request.getParameter("movieType");
+	                String production = request.getParameter("production");
+	                String casts = request.getParameter("casts");
 	                String synopsis = request.getParameter("synopsis");
 	                String poster = request.getParameter("poster");
 	
-	                query = "INSERT INTO movie_nowplay (title, trailer, duration, rating, ageRating, synopsis, poster) VALUES ('"
-	                        + title + "', '" + trailer + "', '" + duration + "', '" + rating + "', '" + ageRating + "', '" + synopsis + "', '" + poster + "')";
+	                query = "INSERT INTO movie_upcome (title, trailer, releaseDate, movieType, production, casts, synopsis, poster) VALUES ('"
+	                        + title + "', '" + trailer + "', '" + releaseDate + "', '" + movieType + "', '" + production + "', '" + casts + "', '" + synopsis + "', '" + poster + "')";
 	                statement.executeUpdate(query);
 	            } else if (action.equals("edit")) {
 	                int id = Integer.parseInt(request.getParameter("id"));
 	                String title = request.getParameter("title");
 	                String trailer = request.getParameter("trailer");
-	                String duration = request.getParameter("duration");
-	                String rating = request.getParameter("rating");
-	                String ageRating = request.getParameter("ageRating");
+	                String releaseDate = request.getParameter("releaseDate");
+	                String movieType = request.getParameter("movieType");
+	                String production = request.getParameter("production");
+	                String casts = request.getParameter("casts");
 	                String synopsis = request.getParameter("synopsis");
 	                String poster = request.getParameter("poster");
 	
-	                query = "UPDATE movie_nowplay SET title='" + title + "', trailer='" + trailer + "', duration='"
-	                        + duration + "', rating='" + rating + "', ageRating='" + ageRating + "', synopsis='"
-	                        + synopsis + "', poster='" + poster + "' WHERE id=" + id;
+	                query = "UPDATE movie_upcome SET title='" + title + "', trailer='" + trailer + "', releaseDate='"
+	                        + releaseDate + "', movieType='" + movieType + "', production='" + production + "', casts='"
+	                        + casts + "', synopsis='" + synopsis + "', poster='" + poster + "' WHERE id=" + id;
 	                statement.executeUpdate(query);
 	            } else if (action.equals("delete")) {
 	                int id = Integer.parseInt(request.getParameter("id"));
-	                query = "DELETE FROM movie_nowplay WHERE id=" + id;
+	                query = "DELETE FROM movie_upcome WHERE id=" + id;
 	                statement.executeUpdate(query);
 	            }
 	        } catch (Exception e) {
@@ -74,16 +76,17 @@
 	        connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 	        statement = connection.createStatement();
 	        String searchCondition = searchQuery.isEmpty() ? "" : " WHERE title LIKE '%" + searchQuery + "%'";
-	        query = "SELECT * FROM movie_nowplay" + searchCondition + " LIMIT " + offset + ", " + moviesPerPage;
+	        query = "SELECT * FROM movie_upcome" + searchCondition + " LIMIT " + offset + ", " + moviesPerPage;
 	        resultSet = statement.executeQuery(query);
 	        while (resultSet.next()) {
 	            Map<String, String> movie = new HashMap<>();
 	            movie.put("id", resultSet.getString("id"));
 	            movie.put("title", resultSet.getString("title"));
 	            movie.put("trailer", resultSet.getString("trailer"));
-	            movie.put("duration", resultSet.getString("duration"));
-	            movie.put("rating", resultSet.getString("rating"));
-	            movie.put("ageRating", resultSet.getString("ageRating"));
+	            movie.put("releaseDate", resultSet.getString("releaseDate"));
+	            movie.put("movieType", resultSet.getString("movieType"));
+	            movie.put("production", resultSet.getString("production"));
+	            movie.put("casts", resultSet.getString("casts"));
 	            movie.put("synopsis", resultSet.getString("synopsis"));
 	            movie.put("poster", resultSet.getString("poster"));
 	            movies.add(movie);
@@ -103,7 +106,7 @@
 	        connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 	        statement = connection.createStatement();
 	        String searchCondition = searchQuery.isEmpty() ? "" : " WHERE title LIKE '%" + searchQuery + "%'";
-	        query = "SELECT COUNT(*) AS total FROM movie_nowplay" + searchCondition;
+	        query = "SELECT COUNT(*) AS total FROM movie_upcome" + searchCondition;
 	        resultSet = statement.executeQuery(query);
 	        if (resultSet.next()) {
 	            totalMovies = resultSet.getInt("total");
@@ -341,9 +344,10 @@
 	                            <th>ID</th>
 	                            <th>Title</th>
 	                            <th>Trailer</th>
-	                            <th>Duration</th>
-	                            <th>Rating</th>
-	                            <th>Age Rating</th>
+	                            <th>Release Date</th>
+	                            <th>Movie Type</th>
+	                            <th>Production</th>
+	                            <th>Casts</th>
 	                            <th>Synopsis</th>
 	                            <th>Poster</th>
 	                            <th>Actions</th>
@@ -355,13 +359,14 @@
 	                                <td><%= movie.get("id") %></td>
 	                                <td><%= movie.get("title") %></td>
 	                                <td><%= movie.get("trailer") %></td>
-	                                <td><%= movie.get("duration") %></td>
-	                                <td><%= movie.get("rating") %></td>
-	                                <td><%= movie.get("ageRating") %></td>
+	                                <td><%= movie.get("releaseDate") %></td>
+	                                <td><%= movie.get("movieType") %></td>
+	                                <td><%= movie.get("production") %></td>
+	                                <td><%= movie.get("casts") %></td>
 	                                <td><%= movie.get("synopsis") %></td>
 	                                <td><%= movie.get("poster") %></td>
 	                                <td>
-	                                    <button onclick="editMovie('<%= movie.get("id") %>', '<%= movie.get("title") %>', '<%= movie.get("trailer") %>', '<%= movie.get("duration") %>', '<%= movie.get("rating") %>', '<%= movie.get("ageRating") %>', '<%= movie.get("synopsis") %>', '<%= movie.get("poster") %>')">Edit</button>
+	                                    <button onclick="editMovie('<%= movie.get("id") %>', '<%= movie.get("title") %>', '<%= movie.get("trailer") %>', '<%= movie.get("releaseDate") %>', '<%= movie.get("movieType") %>', '<%= movie.get("production") %>', '<%= movie.get("casts") %>', '<%= movie.get("synopsis") %>', '<%= movie.get("poster") %>')">Edit</button>
 	                                    <button onclick="deleteMovie('<%= movie.get("id") %>')">Delete</button>
 	                                </td>
 	                            </tr>
@@ -386,12 +391,14 @@
 	                        <input type="text" id="title" name="title" required />
 	                        <label for="trailer">Trailer:</label>
 	                        <input type="text" id="trailer" name="trailer" />
-	                        <label for="duration">Duration:</label>
-	                        <input type="text" id="duration" name="duration" />
-	                        <label for="rating">Rating:</label>
-	                        <input type="text" id="rating" name="rating" />
-	                        <label for="ageRating">Age Rating:</label>
-	                        <input type="text" id="ageRating" name="ageRating" />
+	                        <label for="releaseDate">Release Date:</label>
+	                        <input type="date" id="releaseDate" name="releaseDate" />
+	                        <label for="movieType">Movie Type:</label>
+	                        <input type="text" id="movieType" name="movieType" />
+	                        <label for="production">Production:</label>
+	                        <input type="text" id="production" name="production" />
+	                        <label for="casts">Casts:</label>
+	                        <input type="text" id="casts" name="casts" />
 	                        <label for="synopsis">Synopsis:</label>
 	                        <textarea id="synopsis" name="synopsis"></textarea>
 	                        <label for="poster">Poster:</label>

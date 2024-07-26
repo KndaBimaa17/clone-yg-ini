@@ -130,17 +130,26 @@
             <div>
                 <h2>Reviews</h2>
                 <div id="reviews">
-                    <%
-                    List<Map<String, String>> reviewList = (List<Map<String, String>>) pageContext.getAttribute("reviews");
-                    for (Map<String, String> review : reviewList) {
-                        out.println("<div class='review'>");
-                        out.println("<strong>" + review.get("username") + "</strong> rated <strong>" + review.get("rating") + "</strong> stars<br>");
-                        out.println(review.get("feedback") + "<br>");
-                        out.println("<small>Reviewed on " + review.get("created_at") + "</small>");
-                        out.println("</div>");
-                    }
-                    %>
-                </div>
+    <%
+    List<Map<String, String>> reviewList = (List<Map<String, String>>) pageContext.getAttribute("reviews");
+    
+    reviewList.sort((r1, r2) -> r2.get("created_at").compareTo(r1.get("created_at")));
+    
+    for (Map<String, String> review : reviewList) {
+        String username = review.get("username");
+        String rating = review.get("rating");
+        String feedback = review.get("feedback");
+        String createdAt = review.get("created_at");
+        
+        out.println("<div class='review'>");
+        out.println("<strong>" + username + "</strong> rated <strong>" + rating + "</strong> stars<br>");
+        out.println(feedback + "<br>");
+        out.println("<small>Reviewed on " + createdAt + "</small>");
+        out.println("</div>");
+    }
+    %>
+</div>
+
             </div>
         </div>
     </div>
